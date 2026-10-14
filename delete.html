@@ -1,0 +1,275 @@
+<!-- To delete hostel room data -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Room - Sureim's Hostel Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-shell">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">🏢</div>
+            <div>
+                <strong>SUREIM'S HOSTEL</strong>
+                <small>ROOM REMOVAL</small>
+            </div>
+        </div>
+
+        <span class="nav-label">QUICK NAVIGATION</span>
+        <div class="nav-select">
+            <select onchange="if(this.value) location.href=this.value" aria-label="Page Selection Dropdown">
+                <option value="">▼ Select Page...</option>
+                <option value="index.html">🏠 Home Dashboard</option>
+                <option value="list.html">📋 1. List All Rooms</option>
+                <option value="listone.html">🔍 2. Search Required Room</option>
+                <option value="insert.html">➕ 3. Insert New Room</option>
+                <option value="update.html">✏️ 4. Update Room Details</option>
+                <option value="delete.html" selected>🗑️ 5. Delete Room</option>
+            </select>
+        </div>
+
+        <span class="nav-label">MENU</span>
+        <nav class="side-nav">
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard Home</span>
+            </a>
+            <a href="list.html">
+                <span class="nav-icon">📋</span>
+                <span>List All Rooms</span>
+            </a>
+            <a href="listone.html">
+                <span class="nav-icon">🔍</span>
+                <span>Search Room</span>
+            </a>
+            <a href="insert.html">
+                <span class="nav-icon">➕</span>
+                <span>Insert Room</span>
+            </a>
+            <a href="update.html">
+                <span class="nav-icon">✏️</span>
+                <span>Update Room</span>
+            </a>
+            <a href="delete.html" class="active">
+                <span class="nav-icon">🗑️</span>
+                <span>Delete Room</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-foot">
+            SUREIM'S HOSTEL SYSTEM<br>
+            Deletion Module • Safe Confirmation
+        </div>
+    </aside>
+
+    <!-- MAIN DELETE AREA -->
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <span class="eyebrow" style="color: #e11d48;"><span class="live-dot" style="background: #e11d48;"></span>DELETION MODULE</span>
+                <h1>Sureim's Room Record Removal</h1>
+                <p class="subtitle">Select room from dropdown or enter Room ID to safely preview and delete record from hostel database.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div class="quick-jump">
+                    <label for="jumpSelect">GO TO:</label>
+                    <select id="jumpSelect" onchange="if(this.value) location.href=this.value">
+                        <option value="">Choose Page...</option>
+                        <option value="index.html">Home Dashboard</option>
+                        <option value="list.html">List All Rooms</option>
+                        <option value="listone.html">Search Room</option>
+                        <option value="insert.html">Insert Room</option>
+                        <option value="update.html">Update Room</option>
+                    </select>
+                </div>
+
+                <div class="user-pill">
+                    <div class="avatar">🏢</div>
+                    <div>
+                        <strong>Sureim's Office</strong>
+                        <small>Chief Warden</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- TOP TEXT LINKS COMPATIBILITY (ACADEMIC LAB FORMAT) -->
+        <div style="background: white; padding: 12px 18px; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease-out;">
+            <strong>Navigation: </strong>
+            <a href="index.html">Home</a> |
+            <a href="list.html">List Rooms</a> |
+            <a href="listone.html">List Required Room</a> |
+            <a href="insert.html">Insert Room</a> |
+            <a href="update.html">Update Room</a> |
+            <a href="delete.html" style="font-weight: 700; color: #e11d48;">Delete Room</a>
+        </div>
+
+        <div class="panel">
+            <h2 style="color: #be123c;">🗑️ Select Room to Delete</h2>
+            <p class="help">Choose from the dropdown selector or enter the Room ID manually.</p>
+
+            <div id="noticeMsg" class="notice"></div>
+
+            <div class="form-grid" style="margin-top: 16px;">
+                <!-- DROPDOWN SELECTOR -->
+                <div class="field">
+                    <label for="deleteDropdown">1. Select Room from Dropdown:</label>
+                    <select id="deleteDropdown" onchange="onSelectDropdownRoom(this.value)">
+                        <option value="">▼ Loading available rooms...</option>
+                    </select>
+                    <span class="help">Populated dynamically from database</span>
+                </div>
+
+                <!-- MANUAL INPUT -->
+                <div class="field">
+                    <label for="room_id">2. Or Enter Room ID Manually:</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="room_id" placeholder="Room ID to Delete" style="flex: 1;">
+                        <button class="btn btn-light" onclick="fetchPreview()">Preview</button>
+                    </div>
+                    <span class="help">Enter numeric ID of the room</span>
+                </div>
+            </div>
+
+            <!-- PREVIEW WARNING CARD -->
+            <div id="previewCard" class="preview-card" style="display: none; border-color: #fca5a5; background: #fff1f2; margin-top: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <strong style="color: #9f1239; font-size: 15px;">⚠️ Room Record Confirmation</strong>
+                    <span id="previewStatusBadge" class="badge">Status</span>
+                </div>
+                <div class="preview-grid" style="margin-top: 16px;">
+                    <div class="preview-item">
+                        <small>Room ID</small>
+                        <strong id="prevId">--</strong>
+                    </div>
+                    <div class="preview-item">
+                        <small>Room Number</small>
+                        <strong id="prevNumber">--</strong>
+                    </div>
+                    <div class="preview-item">
+                        <small>Block Name</small>
+                        <strong id="prevBlock">--</strong>
+                    </div>
+                    <div class="preview-item">
+                        <small>Capacity</small>
+                        <strong id="prevCap">--</strong>
+                    </div>
+                    <div class="preview-item">
+                        <small>Occupants</small>
+                        <strong id="prevOcc">--</strong>
+                    </div>
+                </div>
+                <p style="margin: 16px 0 0; color: #be123c; font-size: 12.5px; font-weight: 700;">
+                    Warning: Deleting this hostel room is permanent. Please confirm you wish to proceed.
+                </p>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-danger" onclick="deleteRoom()">🗑️ Confirm & Delete Room</button>
+                <button type="button" class="btn btn-light" onclick="location.href='list.html'">📋 View Room List</button>
+                <button type="button" class="btn btn-light" onclick="location.href='index.html'">🏠 Home Page</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+// Load rooms into dropdown
+loadDeleteDropdown();
+
+function loadDeleteDropdown() {
+    fetch("/rooms")
+        .then(res => res.json())
+        .then(rooms => {
+            const dd = document.getElementById("deleteDropdown");
+            dd.innerHTML = `<option value="">▼ Select Room to Delete...</option>`;
+            rooms.forEach(r => {
+                dd.innerHTML += `<option value="${r.room_id}">Room #${r.room_id} (${r.room_number}) - ${r.block_name} [${r.status}]</option>`;
+            });
+        })
+        .catch(err => console.error("Error loading dropdown:", err));
+}
+
+function onSelectDropdownRoom(val) {
+    if (val) {
+        document.getElementById("room_id").value = val;
+        fetchPreview();
+    } else {
+        document.getElementById("previewCard").style.display = "none";
+    }
+}
+
+function fetchPreview() {
+    const id = document.getElementById("room_id").value.trim();
+    if (!id) {
+        alert("Please enter or select a Room ID!");
+        return;
+    }
+
+    fetch("/rooms/" + id)
+        .then(res => res.json())
+        .then(data => {
+            if (!data || data.length === 0) {
+                alert("Room Not Found with ID: " + id);
+                document.getElementById("previewCard").style.display = "none";
+                return;
+            }
+            const r = data[0];
+            document.getElementById("prevId").innerText = "#" + r.room_id;
+            document.getElementById("prevNumber").innerText = "Room " + r.room_number;
+            document.getElementById("prevBlock").innerText = r.block_name;
+            document.getElementById("prevCap").innerText = r.capacity + " Beds";
+            document.getElementById("prevOcc").innerText = r.no_of_occupied + " Students";
+            
+            const badge = document.getElementById("previewStatusBadge");
+            const isVacant = (r.status || "").toLowerCase().includes("vacant") || (r.status || "").toLowerCase().includes("yes");
+            badge.className = isVacant ? "badge badge-vacant" : "badge badge-occupied";
+            badge.innerText = r.status;
+
+            document.getElementById("previewCard").style.display = "block";
+        })
+        .catch(err => alert("Error: " + err.message));
+}
+
+function deleteRoom() {
+    const roomId = document.getElementById("room_id").value.trim();
+
+    if (!roomId) {
+        alert("Please select or enter a Room ID to delete!");
+        document.getElementById("room_id").focus();
+        return;
+    }
+
+    if (!confirm(`Are you sure you want to permanently delete Room #${roomId}?`)) {
+        return;
+    }
+
+    fetch("/rooms/" + roomId, {
+        method: "DELETE"
+    })
+    .then(async response => {
+        const message = await response.text();
+        if (!response.ok) {
+            throw new Error(message);
+        }
+        return message;
+    })
+    .then(message => {
+        alert(message);
+        location.href = "list.html";
+    })
+    .catch(error => {
+        alert("Failed to delete: " + error.message);
+    });
+}
+</script>
+
+</body>
+</html>

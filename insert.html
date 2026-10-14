@@ -1,0 +1,335 @@
+<!-- To insert hostel room data -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Room - Sureim's Hostel Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-shell">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">🏢</div>
+            <div>
+                <strong>SUREIM'S HOSTEL</strong>
+                <small>ROOM MANAGEMENT</small>
+            </div>
+        </div>
+
+        <span class="nav-label">QUICK NAVIGATION</span>
+        <div class="nav-select">
+            <select onchange="if(this.value) location.href=this.value" aria-label="Page Selection Dropdown">
+                <option value="">▼ Select Page...</option>
+                <option value="index.html">🏠 Home Dashboard</option>
+                <option value="list.html">📋 1. List All Rooms</option>
+                <option value="listone.html">🔍 2. Search Required Room</option>
+                <option value="insert.html" selected>➕ 3. Insert New Room</option>
+                <option value="update.html">✏️ 4. Update Room Details</option>
+                <option value="delete.html">🗑️ 5. Delete Room</option>
+            </select>
+        </div>
+
+        <span class="nav-label">MENU</span>
+        <nav class="side-nav">
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard Home</span>
+            </a>
+            <a href="list.html">
+                <span class="nav-icon">📋</span>
+                <span>List All Rooms</span>
+            </a>
+            <a href="listone.html">
+                <span class="nav-icon">🔍</span>
+                <span>Search Room</span>
+            </a>
+            <a href="insert.html" class="active">
+                <span class="nav-icon">➕</span>
+                <span>Insert Room</span>
+            </a>
+            <a href="update.html">
+                <span class="nav-icon">✏️</span>
+                <span>Update Room</span>
+            </a>
+            <a href="delete.html">
+                <span class="nav-icon">🗑️</span>
+                <span>Delete Room</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-foot">
+            SUREIM'S HOSTEL SYSTEM<br>
+            Insert Module • Form Validation
+        </div>
+    </aside>
+
+    <!-- MAIN FORM AREA -->
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <span class="eyebrow"><span class="live-dot"></span>REGISTRATION MODULE</span>
+                <h1>Register New Hostel Room</h1>
+                <p class="subtitle">Add a new room to inventory with dropdown selectors for Block, Capacity, Occupancy & Vacancy Status.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div class="quick-jump">
+                    <label for="jumpSelect">GO TO:</label>
+                    <select id="jumpSelect" onchange="if(this.value) location.href=this.value">
+                        <option value="">Choose Page...</option>
+                        <option value="index.html">Home Dashboard</option>
+                        <option value="list.html">List All Rooms</option>
+                        <option value="listone.html">Search Room</option>
+                        <option value="update.html">Update Room</option>
+                        <option value="delete.html">Delete Room</option>
+                    </select>
+                </div>
+
+                <div class="user-pill">
+                    <div class="avatar">🏢</div>
+                    <div>
+                        <strong>Sureim's Office</strong>
+                        <small>Chief Warden</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- TOP TEXT LINKS COMPATIBILITY (ACADEMIC LAB FORMAT) -->
+        <div style="background: white; padding: 12px 18px; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease-out;">
+            <strong>Navigation: </strong>
+            <a href="index.html">Home</a> |
+            <a href="list.html">List Rooms</a> |
+            <a href="listone.html">List Required Room</a> |
+            <a href="insert.html" style="font-weight: 700; color: var(--primary);">Insert Room</a> |
+            <a href="update.html">Update Room</a> |
+            <a href="delete.html">Delete Room</a>
+        </div>
+
+        <div class="panel">
+            <h2>➕ New Hostel Room Information</h2>
+            <p class="help" style="margin-bottom: 20px;">All fields feature dropdown selections for error-free hostel room data entry.</p>
+
+            <div id="noticeMsg" class="notice"></div>
+
+            <div class="form-grid">
+                <!-- 1. ROOM ID -->
+                <div class="field">
+                    <label for="room_id">1. Room ID (Unique Primary Key) *</label>
+                    <input type="number" id="room_id" placeholder="e.g. 101, 102, 201, 301" required>
+                    <span class="help">Unique numeric ID assigned to this hostel room</span>
+                </div>
+
+                <!-- 2. ROOM NUMBER (DROPDOWN + INPUT) -->
+                <div class="field">
+                    <label for="room_number_select">2. Room Number (Select / Custom) *</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <select id="room_number_select" onchange="onRoomNumberSelect(this.value)">
+                            <option value="">▼ Select Room No.</option>
+                            <option value="101">Room 101</option>
+                            <option value="102">Room 102</option>
+                            <option value="103">Room 103</option>
+                            <option value="201">Room 201</option>
+                            <option value="202">Room 202</option>
+                            <option value="203">Room 203</option>
+                            <option value="301">Room 301</option>
+                            <option value="302">Room 302</option>
+                            <option value="303">Room 303</option>
+                            <option value="401">Room 401</option>
+                            <option value="402">Room 402</option>
+                            <option value="501">Room 501</option>
+                            <option value="CUSTOM">Custom...</option>
+                        </select>
+                        <input type="text" id="room_number" placeholder="Room Number (e.g. 101)" required>
+                    </div>
+                    <span class="help">Pick from dropdown or type directly</span>
+                </div>
+
+                <!-- 3. BLOCK NAME (DROPDOWN) -->
+                <div class="field">
+                    <label for="block_name">3. Block Name (Select from Dropdown) *</label>
+                    <select id="block_name" required>
+                        <option value="">▼ Select Block Name...</option>
+                        <option value="Block A - Boys Hostel">Block A - Boys Hostel</option>
+                        <option value="Block B - Girls Hostel">Block B - Girls Hostel</option>
+                        <option value="Block C - Freshers Wing">Block C - Freshers Wing</option>
+                        <option value="Block D - Senior Wing">Block D - Senior Wing</option>
+                        <option value="Block E - PG Wing">Block E - PG Wing</option>
+                        <option value="International Hostel Block">International Hostel Block</option>
+                        <option value="Main Campus Block">Main Campus Block</option>
+                    </select>
+                    <span class="help">Select the hostel block or wing</span>
+                </div>
+
+                <!-- 4. CAPACITY OF ROOM (DROPDOWN) -->
+                <div class="field">
+                    <label for="capacity">4. Capacity of Room (Select from Dropdown) *</label>
+                    <select id="capacity" onchange="onCapacityChange()" required>
+                        <option value="">▼ Select Room Capacity...</option>
+                        <option value="1">1 Bed (Single Occupancy)</option>
+                        <option value="2" selected>2 Beds (Double Sharing)</option>
+                        <option value="3">3 Beds (Triple Sharing)</option>
+                        <option value="4">4 Beds (Four Sharing)</option>
+                        <option value="5">5 Beds (Dormitory Sharing)</option>
+                        <option value="6">6 Beds (Dormitory Sharing)</option>
+                    </select>
+                    <span class="help">Maximum student capacity (number of beds)</span>
+                </div>
+
+                <!-- 5. NO. OF OCCUPIED (DROPDOWN) -->
+                <div class="field">
+                    <label for="no_of_occupied">5. No. of Occupied (Select from Dropdown) *</label>
+                    <select id="no_of_occupied" onchange="onOccupiedChange()" required>
+                        <option value="0" selected>0 (No students - Vacant)</option>
+                        <option value="1">1 Student</option>
+                        <option value="2">2 Students</option>
+                        <option value="3">3 Students</option>
+                        <option value="4">4 Students</option>
+                        <option value="5">5 Students</option>
+                        <option value="6">6 Students</option>
+                    </select>
+                    <span class="help">Current number of students occupying the room</span>
+                </div>
+
+                <!-- 6. STATUS (VACANCY YES/NO DROPDOWN) -->
+                <div class="field">
+                    <label for="status">6. Status (Vacancy Yes/No Dropdown) *</label>
+                    <select id="status" required>
+                        <option value="Vacant (Yes)" selected>Vacant (Yes) - Available for Allotment</option>
+                        <option value="Occupied (No)">Occupied (No) - Fully Allotted / In Use</option>
+                    </select>
+                    <span class="help">Vacancy status automatically syncs with occupancy</span>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="form-actions">
+                <button type="button" class="btn" onclick="saveRoom()">💾 Save Room</button>
+                <button type="button" class="btn btn-light" onclick="resetForm()">🔄 Reset Form</button>
+                <button type="button" class="btn btn-light" onclick="location.href='index.html'">🏠 Home Page</button>
+                <button type="button" class="btn btn-light" onclick="location.href='list.html'">📋 View All Rooms</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+// Sync Room Number selection to text input and auto-fill Room ID if empty
+function onRoomNumberSelect(val) {
+    if (val && val !== "CUSTOM") {
+        document.getElementById("room_number").value = val;
+        if (!document.getElementById("room_id").value) {
+            document.getElementById("room_id").value = val;
+        }
+    }
+}
+
+// When capacity changes, ensure occupied dropdown does not exceed capacity
+function onCapacityChange() {
+    const cap = parseInt(document.getElementById("capacity").value) || 2;
+    const occSelect = document.getElementById("no_of_occupied");
+    const currentOcc = parseInt(occSelect.value) || 0;
+    
+    // Auto-adjust if occupied exceeds new capacity
+    if (currentOcc > cap) {
+        occSelect.value = cap;
+        onOccupiedChange();
+    }
+}
+
+// Auto update status based on occupied count
+function onOccupiedChange() {
+    const occ = parseInt(document.getElementById("no_of_occupied").value) || 0;
+    const statusSelect = document.getElementById("status");
+    if (occ === 0) {
+        statusSelect.value = "Vacant (Yes)";
+    } else {
+        statusSelect.value = "Occupied (No)";
+    }
+}
+
+function showNotice(text, type) {
+    const el = document.getElementById("noticeMsg");
+    el.className = "notice show " + type;
+    el.innerText = text;
+}
+
+function resetForm() {
+    document.getElementById("room_id").value = "";
+    document.getElementById("room_number").value = "";
+    document.getElementById("room_number_select").value = "";
+    document.getElementById("block_name").value = "";
+    document.getElementById("capacity").value = "2";
+    document.getElementById("no_of_occupied").value = "0";
+    document.getElementById("status").value = "Vacant (Yes)";
+    document.getElementById("noticeMsg").className = "notice";
+}
+
+function saveRoom() {
+    const room_id = document.getElementById("room_id").value.trim();
+    const room_number = document.getElementById("room_number").value.trim();
+    const block_name = document.getElementById("block_name").value;
+    const capacity = document.getElementById("capacity").value;
+    const no_of_occupied = document.getElementById("no_of_occupied").value;
+    const status = document.getElementById("status").value;
+
+    if (!room_id) {
+        alert("Please enter a Room ID!");
+        document.getElementById("room_id").focus();
+        return;
+    }
+    if (!room_number) {
+        alert("Please enter or select a Room Number!");
+        document.getElementById("room_number").focus();
+        return;
+    }
+    if (!block_name) {
+        alert("Please select a Block Name from the dropdown!");
+        document.getElementById("block_name").focus();
+        return;
+    }
+
+    if (parseInt(no_of_occupied) > parseInt(capacity)) {
+        alert("Number of occupied students cannot exceed room capacity (" + capacity + ")!");
+        return;
+    }
+
+    fetch("/rooms", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            room_id: parseInt(room_id),
+            room_number: room_number,
+            block_name: block_name,
+            capacity: parseInt(capacity),
+            no_of_occupied: parseInt(no_of_occupied),
+            status: status
+        })
+    })
+    .then(async (response) => {
+        const message = await response.text();
+        if (!response.ok) {
+            throw new Error(message);
+        }
+        return message;
+    })
+    .then((message) => {
+        showNotice("Success: " + message, "success");
+        alert(message);
+        location.href = "list.html";
+    })
+    .catch((error) => {
+        showNotice("Error: " + error.message, "error");
+        alert("Failed to insert: " + error.message);
+    });
+}
+</script>
+
+</body>
+</html>

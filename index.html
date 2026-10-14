@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sureim's Hostel Management - Room Inventory Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-shell">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">🏢</div>
+            <div>
+                <strong>SUREIM'S HOSTEL</strong>
+                <small>ROOM MANAGEMENT SYSTEM</small>
+            </div>
+        </div>
+
+        <span class="nav-label">QUICK NAVIGATION</span>
+        <!-- Dropdown for Quick Page Selection -->
+        <div class="nav-select">
+            <select id="quickNavSelect" onchange="if(this.value) location.href=this.value" aria-label="Page Selection Dropdown">
+                <option value="">▼ Select Page / Action...</option>
+                <option value="index.html" selected>🏠 Home Dashboard</option>
+                <option value="list.html">📋 1. List All Rooms</option>
+                <option value="listone.html">🔍 2. Search Required Room</option>
+                <option value="insert.html">➕ 3. Insert New Room</option>
+                <option value="update.html">✏️ 4. Update Room Details</option>
+                <option value="delete.html">🗑️ 5. Delete Room</option>
+            </select>
+        </div>
+
+        <span class="nav-label">MAIN MENU</span>
+        <nav class="side-nav">
+            <a href="index.html" class="active">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard Home</span>
+            </a>
+            <a href="list.html">
+                <span class="nav-icon">📋</span>
+                <span>List All Rooms</span>
+            </a>
+            <a href="listone.html">
+                <span class="nav-icon">🔍</span>
+                <span>Search Room</span>
+            </a>
+            <a href="insert.html">
+                <span class="nav-icon">➕</span>
+                <span>Insert Room</span>
+            </a>
+            <a href="update.html">
+                <span class="nav-icon">✏️</span>
+                <span>Update Room</span>
+            </a>
+            <a href="delete.html">
+                <span class="nav-icon">🗑️</span>
+                <span>Delete Room</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-foot">
+            <strong>SUREIM'S HOSTEL SYSTEM</strong><br>
+            Campus Residential Administration<br>
+            Server: Node.js + Express + MySQL
+        </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div>
+                <span class="eyebrow"><span class="live-dot"></span>CAMPUS RESIDENTIAL PORTAL</span>
+                <h1>Sureim's Hostel Management</h1>
+                <p class="subtitle">Complete hostel room inventory, student bed vacancy tracking, block allocation, and occupancy administration.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div class="quick-jump">
+                    <label for="headerJump">JUMP TO:</label>
+                    <select id="headerJump" onchange="if(this.value) location.href=this.value">
+                        <option value="">Choose Action...</option>
+                        <option value="list.html">List All Rooms</option>
+                        <option value="listone.html">Search Room</option>
+                        <option value="insert.html">Insert Room</option>
+                        <option value="update.html">Update Room</option>
+                        <option value="delete.html">Delete Room</option>
+                    </select>
+                </div>
+
+                <div class="user-pill">
+                    <div class="avatar">🏢</div>
+                    <div>
+                        <strong>Sureim's Office</strong>
+                        <small>Chief Warden & Admin</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- TOP TEXT LINKS COMPATIBILITY (AS GIVEN IN LAB STRUCTURE) -->
+        <div style="background: white; padding: 12px 18px; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease-out;">
+            <strong>Navigation Links: </strong>
+            <a href="index.html" style="font-weight: 700; color: var(--primary);">Home</a> |
+            <a href="list.html" style="font-weight: 600; color: #4338ca;">List Rooms</a> |
+            <a href="listone.html" style="font-weight: 600; color: #4338ca;">List Required Room</a> |
+            <a href="insert.html" style="font-weight: 600; color: #4338ca;">Insert Room</a> |
+            <a href="update.html" style="font-weight: 600; color: #4338ca;">Update Room</a> |
+            <a href="delete.html" style="font-weight: 600; color: #4338ca;">Delete Room</a>
+        </div>
+
+        <!-- HERO BANNER WITH PROFESSIONAL SHOWCASE IMAGE -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="eyebrow" style="color: #a5b4fc;">WELCOME TO SUREIM'S HOSTEL</span>
+                <h2>Smart Hostel Room & Bed Vacancy Administration</h2>
+                <p>Monitor real-time room status across Boys & Girls hostel blocks. Register new rooms with dropdown attributes, update student bed occupancy, and inspect vacancy analytics with instant responses.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-light" onclick="location.href='list.html'">📋 1. List All Rooms</button>
+                    <button class="btn btn-ghost" onclick="location.href='insert.html'">➕ 3. Insert Room</button>
+                    <button class="btn btn-ghost" onclick="location.href='listone.html'">🔍 2. Search Room</button>
+                </div>
+            </div>
+
+            <!-- Floating Image Card -->
+            <div class="hero-image-wrap">
+                <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80" alt="Sureim's Modern Hostel Living" class="hero-card-img" onerror="this.src='https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80'">
+                <div class="hero-badge-overlay">
+                    <span class="live-dot"></span>
+                    <span>Live Allotment Engine</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATISTICS CARDS -->
+        <section class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">🛏️</div>
+                <div>
+                    <strong id="statTotalRooms">--</strong>
+                    <span>Total Hostel Rooms</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="color: #059669; background: #d1fae5;">🟢</div>
+                <div>
+                    <strong id="statVacantRooms" style="color: #059669;">--</strong>
+                    <span>Vacant Rooms (Yes)</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="color: #d97706; background: #fef3c7;">🔴</div>
+                <div>
+                    <strong id="statOccupiedRooms" style="color: #d97706;">--</strong>
+                    <span>Occupied Rooms (No)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOSTEL WINGS PHOTO SHOWCASE -->
+        <div class="section-head">
+            <div>
+                <h2>Hostel Blocks & Residential Wings</h2>
+                <p>Explore facilities and accommodation wings across Sureim's campus.</p>
+            </div>
+        </div>
+
+        <div class="wings-grid">
+            <div class="wing-card" onclick="location.href='list.html'">
+                <div class="wing-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=600&q=80" alt="Block A - Boys Hostel">
+                    <span class="wing-badge">Block A</span>
+                </div>
+                <div class="wing-info">
+                    <h3>Block A - Boys Hostel</h3>
+                    <p>Single & double occupancy rooms with dedicated study desks and high-speed Wi-Fi.</p>
+                </div>
+            </div>
+
+            <div class="wing-card" onclick="location.href='list.html'">
+                <div class="wing-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=600&q=80" alt="Block B - Girls Hostel">
+                    <span class="wing-badge">Block B</span>
+                </div>
+                <div class="wing-info">
+                    <h3>Block B - Girls Hostel</h3>
+                    <p>Secure residential block with 24/7 warden support, attached bathrooms, and balconies.</p>
+                </div>
+            </div>
+
+            <div class="wing-card" onclick="location.href='list.html'">
+                <div class="wing-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80" alt="Block C - Freshers Wing">
+                    <span class="wing-badge">Block C</span>
+                </div>
+                <div class="wing-info">
+                    <h3>Block C - Freshers Wing</h3>
+                    <p>Spacious multi-sharing suites with common recreational zones and student lockers.</p>
+                </div>
+            </div>
+
+            <div class="wing-card" onclick="location.href='list.html'">
+                <div class="wing-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80" alt="Block D - Senior & PG Wing">
+                    <span class="wing-badge">Block D & E</span>
+                </div>
+                <div class="wing-info">
+                    <h3>Senior & PG Wing</h3>
+                    <p>Premium air-conditioned single rooms designed for final year and research scholars.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: OPERATIONS -->
+        <div class="section-head">
+            <div>
+                <h2>Hostel Operations & Management Modules</h2>
+                <p>Select any module below to perform database operations with dropdown filters & form controls.</p>
+            </div>
+        </div>
+
+        <!-- ACTION CARDS GRID -->
+        <div class="actions-grid">
+            <div class="action-card" onclick="location.href='list.html'" style="cursor: pointer;">
+                <div class="action-icon">📋</div>
+                <div>
+                    <strong>1. List All Rooms</strong>
+                    <small>View complete table with badges, dropdown filter by Block, Vacancy & Capacity.</small>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+
+            <div class="action-card" onclick="location.href='listone.html'" style="cursor: pointer;">
+                <div class="action-icon" style="color: #0284c7; background: #e0f2fe;">🔍</div>
+                <div>
+                    <strong>2. List Required Room (Search)</strong>
+                    <small>Select from Room ID dropdown or enter Room ID to view full room details & occupancy bar.</small>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+
+            <div class="action-card" onclick="location.href='insert.html'" style="cursor: pointer;">
+                <div class="action-icon" style="color: #059669; background: #d1fae5;">➕</div>
+                <div>
+                    <strong>3. Insert Room</strong>
+                    <small>Add new room records with dropdown selectors for Block Name, Capacity, Occupied & Status.</small>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+
+            <div class="action-card" onclick="location.href='update.html'" style="cursor: pointer;">
+                <div class="action-icon" style="color: #b45309; background: #fef3c7;">✏️</div>
+                <div>
+                    <strong>4. Update Room Details</strong>
+                    <small>Select existing room from dropdown to auto-fill and modify details or occupancy status.</small>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+
+            <div class="action-card" onclick="location.href='delete.html'" style="cursor: pointer;">
+                <div class="action-icon" style="color: #e11d48; background: #ffe4e6;">🗑️</div>
+                <div>
+                    <strong>5. Delete Room</strong>
+                    <small>Select room from dropdown, preview its current details, and delete safely from system.</small>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+
+        <footer class="footer">
+            Sureim's Hostel Management System • Academic Course & Lab Project • Ready for Examination & Demo
+        </footer>
+    </main>
+</div>
+
+<script>
+// Fetch Live Stats for Dashboard
+fetch("/stats")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("statTotalRooms").innerText = data.totalRooms ?? 0;
+        document.getElementById("statVacantRooms").innerText = data.vacantRooms ?? 0;
+        document.getElementById("statOccupiedRooms").innerText = data.occupiedRooms ?? 0;
+    })
+    .catch(err => {
+        console.warn("Stats API error, fetching fallback from /rooms:", err);
+        fetch("/rooms")
+            .then(res => res.json())
+            .then(rooms => {
+                const total = rooms.length;
+                const vacant = rooms.filter(r => (r.status || "").toLowerCase().includes("vacant") || (r.status || "").toLowerCase().includes("yes")).length;
+                document.getElementById("statTotalRooms").innerText = total;
+                document.getElementById("statVacantRooms").innerText = vacant;
+                document.getElementById("statOccupiedRooms").innerText = total - vacant;
+            })
+            .catch(() => {});
+    });
+</script>
+
+</body>
+</html>

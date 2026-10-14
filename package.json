@@ -1,0 +1,21 @@
+{
+  "name": "hostel-management-system",
+  "version": "1.0.0",
+  "description": "Professional Hostel Management Room System with Dropdowns & Modern CSS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "hostel-management",
+    "express",
+    "mysql",
+    "crud"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mysql2": "^3.9.8"
+  }
+}

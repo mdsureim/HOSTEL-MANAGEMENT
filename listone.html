@@ -1,0 +1,330 @@
+<!-- To list one hostel room data -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Room - Sureim's Hostel Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-shell">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">🏢</div>
+            <div>
+                <strong>SUREIM'S HOSTEL</strong>
+                <small>ROOM SEARCH</small>
+            </div>
+        </div>
+
+        <span class="nav-label">QUICK NAVIGATION</span>
+        <div class="nav-select">
+            <select onchange="if(this.value) location.href=this.value" aria-label="Page Selection Dropdown">
+                <option value="">▼ Select Page...</option>
+                <option value="index.html">🏠 Home Dashboard</option>
+                <option value="list.html">📋 1. List All Rooms</option>
+                <option value="listone.html" selected>🔍 2. Search Required Room</option>
+                <option value="insert.html">➕ 3. Insert New Room</option>
+                <option value="update.html">✏️ 4. Update Room Details</option>
+                <option value="delete.html">🗑️ 5. Delete Room</option>
+            </select>
+        </div>
+
+        <span class="nav-label">MENU</span>
+        <nav class="side-nav">
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard Home</span>
+            </a>
+            <a href="list.html">
+                <span class="nav-icon">📋</span>
+                <span>List All Rooms</span>
+            </a>
+            <a href="listone.html" class="active">
+                <span class="nav-icon">🔍</span>
+                <span>Search Room</span>
+            </a>
+            <a href="insert.html">
+                <span class="nav-icon">➕</span>
+                <span>Insert Room</span>
+            </a>
+            <a href="update.html">
+                <span class="nav-icon">✏️</span>
+                <span>Update Room</span>
+            </a>
+            <a href="delete.html">
+                <span class="nav-icon">🗑️</span>
+                <span>Delete Room</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-foot">
+            SUREIM'S HOSTEL SYSTEM<br>
+            Single Room Inspection Module
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <span class="eyebrow"><span class="live-dot"></span>INSPECTION MODULE</span>
+                <h1>Sureim's Room Search & Inspection</h1>
+                <p class="subtitle">Look up individual hostel room details using the Room ID dropdown selector or manual search.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div class="quick-jump">
+                    <label for="jumpSelect">GO TO:</label>
+                    <select id="jumpSelect" onchange="if(this.value) location.href=this.value">
+                        <option value="">Choose Page...</option>
+                        <option value="index.html">Home Dashboard</option>
+                        <option value="list.html">List All Rooms</option>
+                        <option value="insert.html">Insert Room</option>
+                        <option value="update.html">Update Room</option>
+                        <option value="delete.html">Delete Room</option>
+                    </select>
+                </div>
+
+                <div class="user-pill">
+                    <div class="avatar">🏢</div>
+                    <div>
+                        <strong>Sureim's Office</strong>
+                        <small>Chief Warden</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- TOP TEXT LINKS COMPATIBILITY (ACADEMIC LAB FORMAT) -->
+        <div style="background: white; padding: 12px 18px; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease-out;">
+            <strong>Navigation: </strong>
+            <a href="index.html">Home</a> |
+            <a href="list.html">List Rooms</a> |
+            <a href="listone.html" style="font-weight: 700; color: var(--primary);">List Required Room</a> |
+            <a href="insert.html">Insert Room</a> |
+            <a href="update.html">Update Room</a> |
+            <a href="delete.html">Delete Room</a>
+        </div>
+
+        <!-- SEARCH CONTROL PANEL WITH DROPDOWN -->
+        <div class="panel" style="margin-bottom: 24px;">
+            <h2>🔍 Select or Enter Room ID</h2>
+            <p class="help">Choose a room directly from the dropdown list, or type any Room ID to fetch its complete record.</p>
+
+            <div class="form-grid" style="margin-top: 16px;">
+                <!-- DROPDOWN SELECTOR -->
+                <div class="field">
+                    <label for="roomDropdown">Select Room from Dropdown:</label>
+                    <select id="roomDropdown" onchange="onDropdownSelect(this.value)">
+                        <option value="">▼ Loading available rooms...</option>
+                    </select>
+                    <span class="help">Instant selection populated from live database</span>
+                </div>
+
+                <!-- MANUAL INPUT -->
+                <div class="field">
+                    <label for="room_id">Or Enter Room ID Manually:</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="room_id" placeholder="Enter Room ID (e.g. 101)" style="flex: 1;">
+                        <button class="btn" onclick="searchRoom()" style="white-space: nowrap;">🔍 Search</button>
+                    </div>
+                    <span class="help">Type numeric Room ID and click Search</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULT PREVIEW CARD & TABLE -->
+        <div id="resultContainer" style="display: none;">
+            <div class="preview-card" style="border-radius: 20px; box-shadow: var(--shadow-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <span class="eyebrow" style="color: var(--primary);"><span class="live-dot"></span>ROOM RECORD FOUND</span>
+                        <h2 id="cardTitle" style="margin: 4px 0 0; color: #1e1b4b; font-size: 24px;">Room 101</h2>
+                    </div>
+                    <span id="cardStatusBadge" class="badge">Status</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 140px 1fr; gap: 20px; align-items: center;">
+                    <div style="width: 140px; height: 130px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=400&q=80" alt="Hostel Room" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+
+                    <div class="preview-grid" style="flex: 1;">
+                        <div class="preview-item">
+                            <small>Room ID</small>
+                            <strong id="cardRoomId">#--</strong>
+                        </div>
+                        <div class="preview-item">
+                            <small>Room Number</small>
+                            <strong id="cardRoomNumber">--</strong>
+                        </div>
+                        <div class="preview-item">
+                            <small>Block Name</small>
+                            <strong id="cardBlockName">--</strong>
+                        </div>
+                        <div class="preview-item">
+                            <small>Capacity</small>
+                            <strong id="cardCapacity">-- Beds</strong>
+                        </div>
+                        <div class="preview-item">
+                            <small>No. of Occupied</small>
+                            <strong id="cardOccupied">-- Students</strong>
+                        </div>
+                        <div class="preview-item">
+                            <small>Vacancy Status</small>
+                            <strong id="cardVacancy">--</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <small style="color: var(--text-muted); font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">STUDENT BED OCCUPANCY LOAD</small>
+                    <div class="progress-track" style="height: 9px; margin-top: 8px;">
+                        <div id="cardProgressBar" class="progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 22px; border-top: 1px solid var(--border); padding-top: 18px; flex-wrap: wrap;">
+                    <button class="btn btn-light" id="btnEditRoom">✏️ Edit This Room</button>
+                    <button class="btn btn-danger" id="btnDeleteRoom">🗑️ Delete This Room</button>
+                </div>
+            </div>
+
+            <!-- LAB STANDARD DATA TABLE FORMAT -->
+            <div class="table-wrap" style="margin-top: 20px;">
+                <table id="roomTable">
+                    <thead>
+                        <tr>
+                            <th>Room ID</th>
+                            <th>Room Number</th>
+                            <th>Block Name</th>
+                            <th>Capacity</th>
+                            <th>No. of Occupied</th>
+                            <th>Status (Vacancy Yes/No)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBodyResult">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-light" onclick="location.href='index.html'">🏠 Home Page</button>
+            <button class="btn btn-light" onclick="location.href='list.html'">📋 View All Rooms</button>
+        </div>
+    </main>
+</div>
+
+<script>
+// Load rooms into dropdown on startup
+loadRoomDropdown();
+
+// Check if room ID was passed via query parameter (e.g. listone.html?id=101)
+const urlParams = new URLSearchParams(window.location.search);
+const paramId = urlParams.get("id");
+if (paramId) {
+    document.getElementById("room_id").value = paramId;
+    searchRoom();
+}
+
+function loadRoomDropdown() {
+    fetch("/rooms")
+        .then(res => res.json())
+        .then(rooms => {
+            const dropdown = document.getElementById("roomDropdown");
+            dropdown.innerHTML = `<option value="">▼ Select Room ID / Number...</option>`;
+            rooms.forEach(room => {
+                dropdown.innerHTML += `<option value="${room.room_id}">Room #${room.room_id} (${room.room_number}) - ${room.block_name} [${room.status}]</option>`;
+            });
+            if (paramId) {
+                dropdown.value = paramId;
+            }
+        })
+        .catch(err => {
+            console.error("Error populating dropdown:", err);
+        });
+}
+
+function onDropdownSelect(val) {
+    if (val) {
+        document.getElementById("room_id").value = val;
+        searchRoom();
+    }
+}
+
+function searchRoom() {
+    const roomId = document.getElementById("room_id").value.trim();
+    if (!roomId) {
+        alert("Please enter or select a Room ID!");
+        return;
+    }
+
+    fetch("/rooms/" + roomId)
+        .then(response => response.json())
+        .then(data => {
+            if (!data || data.length === 0) {
+                alert("Room Not Found with ID: " + roomId);
+                document.getElementById("resultContainer").style.display = "none";
+                return;
+            }
+
+            const room = data[0];
+            const isVacant = (room.status || "").toLowerCase().includes("vacant") || (room.status || "").toLowerCase().includes("yes");
+            const badgeClass = isVacant ? "badge badge-vacant" : "badge badge-occupied";
+
+            // Update Card
+            document.getElementById("cardTitle").innerText = `Room ${room.room_number} (${room.block_name})`;
+            document.getElementById("cardRoomId").innerText = `#${room.room_id}`;
+            document.getElementById("cardRoomNumber").innerText = room.room_number;
+            document.getElementById("cardBlockName").innerText = room.block_name;
+            document.getElementById("cardCapacity").innerText = `${room.capacity} Beds`;
+            document.getElementById("cardOccupied").innerText = `${room.no_of_occupied} Students`;
+            document.getElementById("cardVacancy").innerText = room.status;
+
+            const statusBadge = document.getElementById("cardStatusBadge");
+            statusBadge.className = badgeClass;
+            statusBadge.innerText = (isVacant ? "🟢 " : "🔴 ") + room.status;
+
+            const percentage = Math.min(100, Math.round(((room.no_of_occupied || 0) / (room.capacity || 1)) * 100));
+            document.getElementById("cardProgressBar").style.width = percentage + "%";
+
+            // Action buttons
+            document.getElementById("btnEditRoom").onclick = () => location.href = `update.html?id=${room.room_id}`;
+            document.getElementById("btnDeleteRoom").onclick = () => {
+                if (confirm(`Are you sure you want to delete Room #${room.room_id}?`)) {
+                    fetch("/rooms/" + room.room_id, { method: "DELETE" })
+                        .then(r => r.text())
+                        .then(msg => {
+                            alert(msg);
+                            location.href = "list.html";
+                        });
+                }
+            };
+
+            // Update Table Row
+            document.getElementById("tableBodyResult").innerHTML = `
+                <tr>
+                    <td><strong>#${room.room_id}</strong></td>
+                    <td><strong>Room ${room.room_number}</strong></td>
+                    <td>${room.block_name}</td>
+                    <td>${room.capacity} Beds</td>
+                    <td>${room.no_of_occupied} Students (${percentage}%)</td>
+                    <td><span class="${badgeClass}">${isVacant ? "🟢" : "🔴"} ${room.status}</span></td>
+                </tr>
+            `;
+
+            document.getElementById("resultContainer").style.display = "block";
+        })
+        .catch(err => {
+            alert("Error querying room: " + err.message);
+        });
+}
+</script>
+
+</body>
+</html>

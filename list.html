@@ -1,0 +1,349 @@
+<!-- To list all hostel rooms data -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Rooms - Sureim's Hostel Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-shell">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">🏢</div>
+            <div>
+                <strong>SUREIM'S HOSTEL</strong>
+                <small>ROOM INVENTORY</small>
+            </div>
+        </div>
+
+        <span class="nav-label">QUICK NAVIGATION</span>
+        <div class="nav-select">
+            <select onchange="if(this.value) location.href=this.value" aria-label="Page Selection Dropdown">
+                <option value="">▼ Select Page...</option>
+                <option value="index.html">🏠 Home Dashboard</option>
+                <option value="list.html" selected>📋 1. List All Rooms</option>
+                <option value="listone.html">🔍 2. Search Required Room</option>
+                <option value="insert.html">➕ 3. Insert New Room</option>
+                <option value="update.html">✏️ 4. Update Room Details</option>
+                <option value="delete.html">🗑️ 5. Delete Room</option>
+            </select>
+        </div>
+
+        <span class="nav-label">MENU</span>
+        <nav class="side-nav">
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard Home</span>
+            </a>
+            <a href="list.html" class="active">
+                <span class="nav-icon">📋</span>
+                <span>List All Rooms</span>
+            </a>
+            <a href="listone.html">
+                <span class="nav-icon">🔍</span>
+                <span>Search Room</span>
+            </a>
+            <a href="insert.html">
+                <span class="nav-icon">➕</span>
+                <span>Insert Room</span>
+            </a>
+            <a href="update.html">
+                <span class="nav-icon">✏️</span>
+                <span>Update Room</span>
+            </a>
+            <a href="delete.html">
+                <span class="nav-icon">🗑️</span>
+                <span>Delete Room</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-foot">
+            SUREIM'S HOSTEL SYSTEM<br>
+            Inventory Table • Live Filtering
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <span class="eyebrow"><span class="live-dot"></span>INVENTORY MODULE</span>
+                <h1>Sureim's Hostel Rooms Directory</h1>
+                <p class="subtitle">Real-time room occupancy directory with dropdown filters for Block, Vacancy Status & Capacity.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div class="quick-jump">
+                    <label for="jumpSelect">GO TO:</label>
+                    <select id="jumpSelect" onchange="if(this.value) location.href=this.value">
+                        <option value="">Choose Page...</option>
+                        <option value="index.html">Home Dashboard</option>
+                        <option value="listone.html">Search Room</option>
+                        <option value="insert.html">Insert Room</option>
+                        <option value="update.html">Update Room</option>
+                        <option value="delete.html">Delete Room</option>
+                    </select>
+                </div>
+
+                <div class="user-pill">
+                    <div class="avatar">🏢</div>
+                    <div>
+                        <strong>Sureim's Office</strong>
+                        <small>Chief Warden</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- TOP TEXT LINKS COMPATIBILITY (ACADEMIC LAB FORMAT) -->
+        <div style="background: white; padding: 12px 18px; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease-out;">
+            <strong>Navigation: </strong>
+            <a href="index.html">Home</a> |
+            <a href="list.html" style="font-weight: 700; color: var(--primary);">List Rooms</a> |
+            <a href="listone.html">List Required Room</a> |
+            <a href="insert.html">Insert Room</a> |
+            <a href="update.html">Update Room</a> |
+            <a href="delete.html">Delete Room</a>
+        </div>
+
+        <!-- FILTER & TOOLBAR CARD WITH MULTIPLE DROPDOWNS -->
+        <div class="panel" style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #0f172a;">🎯 Dropdown Filters & Search Toolbar</h3>
+                <span id="roomCountBadge" class="badge" style="font-size: 12px; background: #e0e7ff; color: #3730a3;">Loading rooms...</span>
+            </div>
+
+            <div class="filter-grid">
+                <!-- DROPDOWN 1: BLOCK FILTER -->
+                <div>
+                    <label for="filterBlock" style="font-size: 11px;">Filter by Block Name:</label>
+                    <select id="filterBlock" onchange="applyFilters()">
+                        <option value="ALL">▼ All Blocks</option>
+                        <option value="Block A - Boys Hostel">Block A - Boys Hostel</option>
+                        <option value="Block B - Girls Hostel">Block B - Girls Hostel</option>
+                        <option value="Block C - Freshers Wing">Block C - Freshers Wing</option>
+                        <option value="Block D - Senior Wing">Block D - Senior Wing</option>
+                        <option value="Block E - PG Wing">Block E - PG Wing</option>
+                        <option value="International Hostel Block">International Hostel Block</option>
+                        <option value="Main Campus Block">Main Campus Block</option>
+                    </select>
+                </div>
+
+                <!-- DROPDOWN 2: STATUS FILTER -->
+                <div>
+                    <label for="filterStatus" style="font-size: 11px;">Filter by Status (Vacancy):</label>
+                    <select id="filterStatus" onchange="applyFilters()">
+                        <option value="ALL">▼ All Statuses</option>
+                        <option value="Vacant (Yes)">🟢 Vacant (Yes)</option>
+                        <option value="Occupied (No)">🔴 Occupied (No)</option>
+                    </select>
+                </div>
+
+                <!-- DROPDOWN 3: CAPACITY FILTER -->
+                <div>
+                    <label for="filterCapacity" style="font-size: 11px;">Filter by Capacity:</label>
+                    <select id="filterCapacity" onchange="applyFilters()">
+                        <option value="ALL">▼ All Capacities</option>
+                        <option value="1">1 Bed (Single)</option>
+                        <option value="2">2 Beds (Double)</option>
+                        <option value="3">3 Beds (Triple)</option>
+                        <option value="4">4 Beds (Four Sharing)</option>
+                        <option value="6">6 Beds (Dormitory)</option>
+                    </select>
+                </div>
+
+                <!-- DROPDOWN 4: SORT BY -->
+                <div>
+                    <label for="sortBy" style="font-size: 11px;">Sort Records By:</label>
+                    <select id="sortBy" onchange="applyFilters()">
+                        <option value="id_asc">Room ID (Ascending)</option>
+                        <option value="id_desc">Room ID (Descending)</option>
+                        <option value="number">Room Number</option>
+                        <option value="capacity">Capacity (High to Low)</option>
+                        <option value="occupied">Occupancy (High to Low)</option>
+                    </select>
+                </div>
+
+                <!-- SEARCH TEXT INPUT -->
+                <div>
+                    <label for="searchQuery" style="font-size: 11px;">Search Room No / ID:</label>
+                    <input type="text" id="searchQuery" placeholder="Type room #..." oninput="applyFilters()" style="min-height: 47px;">
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                <button class="btn" onclick="loadRooms()">🔄 Refresh List</button>
+                <button class="btn btn-light" onclick="clearFilters()">🧹 Clear Filters</button>
+                <button class="btn btn-light" onclick="location.href='insert.html'">➕ Insert New Room</button>
+                <button class="btn btn-light" onclick="location.href='index.html'">🏠 Home Page</button>
+            </div>
+        </div>
+
+        <!-- TABLE OF ROOMS -->
+        <div class="table-wrap">
+            <table id="roomTable">
+                <thead>
+                    <tr>
+                        <th>Room ID</th>
+                        <th>Room Number</th>
+                        <th>Block Name</th>
+                        <th>Capacity</th>
+                        <th>No. of Occupied</th>
+                        <th>Status (Vacancy Yes/No)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="roomTableBody">
+                    <tr>
+                        <td colspan="7" class="empty">Loading hostel rooms from server...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-light" onclick="location.href='index.html'">🏠 Home Page</button>
+            <button class="btn btn-light" onclick="location.href='insert.html'">➕ Insert Another Room</button>
+        </div>
+    </main>
+</div>
+
+<script>
+let allRooms = [];
+
+// Initial Load
+loadRooms();
+
+function loadRooms() {
+    fetch("/rooms")
+        .then(response => response.json())
+        .then(data => {
+            allRooms = data;
+            applyFilters();
+        })
+        .catch(err => {
+            console.error("Error loading rooms:", err);
+            const tbody = document.getElementById("roomTableBody");
+            tbody.innerHTML = `<tr><td colspan="7" class="empty" style="color: #be123c;">Error loading rooms. Make sure the backend server is running.</td></tr>`;
+        });
+}
+
+function clearFilters() {
+    document.getElementById("filterBlock").value = "ALL";
+    document.getElementById("filterStatus").value = "ALL";
+    document.getElementById("filterCapacity").value = "ALL";
+    document.getElementById("sortBy").value = "id_asc";
+    document.getElementById("searchQuery").value = "";
+    applyFilters();
+}
+
+function applyFilters() {
+    const blockFilter = document.getElementById("filterBlock").value;
+    const statusFilter = document.getElementById("filterStatus").value;
+    const capacityFilter = document.getElementById("filterCapacity").value;
+    const sortBy = document.getElementById("sortBy").value;
+    const query = document.getElementById("searchQuery").value.trim().toLowerCase();
+
+    let filtered = allRooms.filter(room => {
+        // Block filter
+        if (blockFilter !== "ALL" && room.block_name !== blockFilter) {
+            return false;
+        }
+        // Status filter
+        if (statusFilter !== "ALL") {
+            const rStat = (room.status || "").toLowerCase();
+            const fStat = statusFilter.toLowerCase();
+            if (!rStat.includes(fStat.includes("vacant") ? "vacant" : "occupied") && rStat !== fStat) {
+                return false;
+            }
+        }
+        // Capacity filter
+        if (capacityFilter !== "ALL" && parseInt(room.capacity) !== parseInt(capacityFilter)) {
+            return false;
+        }
+        // Search query
+        if (query) {
+            const matchesId = String(room.room_id).toLowerCase().includes(query);
+            const matchesNum = String(room.room_number).toLowerCase().includes(query);
+            const matchesBlock = String(room.block_name).toLowerCase().includes(query);
+            if (!matchesId && !matchesNum && !matchesBlock) return false;
+        }
+        return true;
+    });
+
+    // Sorting
+    filtered.sort((a, b) => {
+        if (sortBy === "id_asc") return a.room_id - b.room_id;
+        if (sortBy === "id_desc") return b.room_id - a.room_id;
+        if (sortBy === "number") return String(a.room_number).localeCompare(String(b.room_number));
+        if (sortBy === "capacity") return b.capacity - a.capacity;
+        if (sortBy === "occupied") return b.no_of_occupied - a.no_of_occupied;
+        return 0;
+    });
+
+    // Update count badge
+    document.getElementById("roomCountBadge").innerText = `Showing ${filtered.length} of ${allRooms.length} Rooms`;
+
+    // Render Table Body
+    const tbody = document.getElementById("roomTableBody");
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="empty">No rooms found matching the selected filters.</td></tr>`;
+        return;
+    }
+
+    let rowsHtml = "";
+    filtered.forEach(room => {
+        const isVacant = (room.status || "").toLowerCase().includes("vacant") || (room.status || "").toLowerCase().includes("yes");
+        const badgeClass = isVacant ? "badge badge-vacant" : "badge badge-occupied";
+        const statusIcon = isVacant ? "🟢" : "🔴";
+
+        rowsHtml += `
+            <tr>
+                <td><strong>#${room.room_id}</strong></td>
+                <td><span style="font-weight: 800; color: #1e1b4b;">Room ${room.room_number}</span></td>
+                <td>${room.block_name}</td>
+                <td>${room.capacity} Beds</td>
+                <td>
+                    <strong>${room.no_of_occupied}</strong> / ${room.capacity} Students
+                    <div class="progress-track" style="max-width: 90px;">
+                        <div class="progress-bar" style="width: ${Math.min(100, (room.no_of_occupied / (room.capacity || 1)) * 100)}%;"></div>
+                    </div>
+                </td>
+                <td>
+                    <span class="${badgeClass}">${statusIcon} ${room.status}</span>
+                </td>
+                <td>
+                    <div style="display: flex; gap: 6px;">
+                        <button class="btn btn-light" style="padding: 6px 11px; font-size: 11px;" onclick="location.href='listone.html?id=${room.room_id}'" title="View Details">🔍 View</button>
+                        <button class="btn btn-light" style="padding: 6px 11px; font-size: 11px;" onclick="location.href='update.html?id=${room.room_id}'" title="Edit Room">✏️ Edit</button>
+                        <button class="btn btn-danger" style="padding: 6px 11px; font-size: 11px;" onclick="deleteRoomQuick(${room.room_id})" title="Delete Room">🗑️</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = rowsHtml;
+}
+
+function deleteRoomQuick(id) {
+    if (!confirm(`Are you sure you want to delete Room #${id}?`)) return;
+
+    fetch("/rooms/" + id, { method: "DELETE" })
+        .then(async res => {
+            const msg = await res.text();
+            if (!res.ok) throw new Error(msg);
+            alert(msg);
+            loadRooms();
+        })
+        .catch(err => alert("Delete failed: " + err.message));
+}
+</script>
+
+</body>
+</html>
